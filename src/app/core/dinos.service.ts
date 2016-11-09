@@ -13,25 +13,22 @@ export class DinosService {
 
   constructor(private http: Http) { }
 
-  getAllDinos(): Observable<Dino[]> {
+  getAllDinos$(): Observable<Dino[]> {
     return this.http
       .get(`${this.baseUrl}dinosaurs`)
       .map(this.handleSuccess)
       .catch(this.handleError);
   }
 
-  getDino(id: number): Observable<DinoDetail> {
-    return this.http.get(`${this.baseUrl}dinosaur/${id}`)
+  getDino$(id: number): Observable<DinoDetail> {
+    return this.http
+      .get(`${this.baseUrl}dinosaur/${id}`)
       .map(this.handleSuccess)
       .catch(this.handleError);
   }
 
   private handleSuccess(res: Response) {
-    if (typeof res === 'object') {
-      return res.json();
-    } else {
-      this.handleError({message: 'Retrieved data is not typeof object'});
-    }
+    return res.json();
   }
 
   private handleError(err: Response | any) {

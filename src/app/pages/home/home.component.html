@@ -1,4 +1,4 @@
-<article id="content-wrapper" class="content-wrapper home-wrapper">
+<article id="content-wrapper" class="content-wrapper">
   <h2 class="content-heading">{{pageName}}</h2>
 
   <app-loading *ngIf="loading"></app-loading>
@@ -17,19 +17,22 @@
         (keyup)="filterDinos(query)" />
 
       <span class="input-group-btn">
-        <button class="btn btn-danger" (click)="resetQuery()" [disabled]="!query">&times;</button>
+        <button
+          class="btn btn-danger"
+          (click)="resetQuery()"
+          [disabled]="!query">&times;</button>
       </span>
     </section>
     
     <!-- Dinosaurs -->
     <section *ngIf="dinos" class="row">
-      <div class="col-sm-12 col-md-4" *ngFor="let dino of filteredDinos">
+      <div class="col-xs-12 col-sm-4" *ngFor="let dino of filteredDinos">
         <app-dino-card [dino]="dino"></app-dino-card>
       </div>
     </section>
 
     <!-- No search results -->
-    <p *ngIf="dinos && !filteredDinos.length && query && !error" class="alert alert-warning">
+    <p *ngIf="noSearchResults" class="alert alert-warning">
       No information available on a dinosaur called <em class="text-danger">{{query}}</em>, sorry!
     </p>
 

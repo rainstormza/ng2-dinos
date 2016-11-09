@@ -2,11 +2,11 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-loading',
-  template: '<img class="loading" src="/assets/images/ajax-loader.gif">',
+  template: '<img class="loading" src="/assets/images/raptor-loading.gif">',
   styles: [`
     .loading { 
       display: block; 
       margin: 30px auto; }
   `]
 })
-export class LoadingComponent {}
+export class LoadingComponent { }

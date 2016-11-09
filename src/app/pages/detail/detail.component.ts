@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { Router, ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
 
 import { DinosService } from '../../core/dinos.service';
 import { DinoDetail } from '../../core/models/dino-detail.model';
@@ -8,7 +8,8 @@ import { DinoDetail } from '../../core/models/dino-detail.model';
 @Component({
   selector: 'app-detail',
   templateUrl: './detail.component.html',
-  styleUrls: ['./detail.component.scss']
+  styleUrls: ['./detail.component.scss'],
+  providers: [DinosService]
 })
 export class DetailComponent implements OnInit {
   dino: DinoDetail;
@@ -18,23 +19,22 @@ export class DetailComponent implements OnInit {
   constructor(
     private titleService: Title,
     private dinosService: DinosService,
-    private router: Router,
     private route: ActivatedRoute) { }
 
   getDino() {
     this.route.params.forEach((params: Params) => {
       let id = +params['id'];	// convert string to number
 
-      this.dinosService
-        .getDino(id)
+      this.dinosService.getDino$(id)
         .subscribe(
           res => {
             this.dino = res;
-            this.titleService.setTitle(res.name);
-            this.loading = false;
+            this.titleService.setTitle(this.dino.name);
           },
           err => {
             this.error = true;
+          },
+          () => {
             this.loading = false;
           }
         );
