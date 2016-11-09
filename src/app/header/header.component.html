@@ -22,17 +22,23 @@
       </li>
     </ul>
 
-    <div class="authButtons-wrapper">
+    <section class="authWrapper">
+      <!-- Logged out -->
       <a
         class="btn btn-primary"
         (click)="auth.login()"
         *ngIf="!auth.authenticated()">Log In</a>
 
-      <a
-        class="btn btn-danger"
-        (click)="auth.logout()"
-        *ngIf="auth.authenticated()">Log Out</a>
-    </div> 
+      <!-- Logged in -->
+      <div class="alert alert-info text-center" *ngIf="auth.authenticated()">
+        <p *ngIf="auth.userProfile">Hello, {{auth.userProfile.name}}!</p>
+
+        <a
+          class="btn btn-danger"
+          (click)="auth.logout()"
+          >Log Out</a>
+      </div>
+    </section> 
 
   </nav>
 </header>

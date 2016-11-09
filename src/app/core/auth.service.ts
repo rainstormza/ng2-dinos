@@ -7,12 +7,24 @@ declare var Auth0Lock: any;
 @Injectable()
 export class AuthService {
   lock = new Auth0Lock('[YOUR_AUTH0_CLIENT_ID]', '[YOUR_AUTH0_CLIENT_DOMAIN].auth0.com', {});
+  userProfile: Object;
 
-  constructor() { 
+  constructor() {
+    this.userProfile = JSON.parse(localStorage.getItem('profile'));
+
     // Add callback for lock 'authenticated' event
     this.lock.on('authenticated', 
       (authResult) => {
         localStorage.setItem('id_token', authResult.idToken);
+
+        this.lock.getProfile(authResult.idToken, (error, profile) => {
+          if (error) {
+            throw Error('There was an error retrieving profile data!');
+          }
+
+          localStorage.setItem('profile', JSON.stringify(profile));
+          this.userProfile = profile;
+        })
       }
     );
   }
@@ -29,8 +41,10 @@ export class AuthService {
   }
 
   public logout() {
-    // Remove token from localStorage
+    // Remove token and profile from localStorage
     localStorage.removeItem('id_token');
+    localStorage.removeItem('profile');
+    this.userProfile = undefined;
   }
 
 }
