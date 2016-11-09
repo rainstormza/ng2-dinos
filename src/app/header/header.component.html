@@ -21,5 +21,18 @@
         <a href="https://github.com/auth0-blog/sample-nodeserver-dinos">Dino API on GitHub</a>
       </li>
     </ul>
+
+    <div class="authButtons-wrapper">
+      <a
+        class="btn btn-primary"
+        (click)="auth.login()"
+        *ngIf="!auth.authenticated()">Log In</a>
+
+      <a
+        class="btn btn-danger"
+        (click)="auth.logout()"
+        *ngIf="auth.authenticated()">Log Out</a>
+    </div> 
+
   </nav>
 </header>

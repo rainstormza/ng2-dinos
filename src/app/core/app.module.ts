@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { LoadingComponent } from './ui/loading.component';
 import { HeaderComponent } from '../header/header.component';
 import { FooterComponent } from '../footer/footer.component';
+import { AuthService } from './auth.service';
 
 import { AboutComponent } from '../pages/about/about.component';
 import { HomeComponent } from '../pages/home/home.component';
@@ -34,7 +35,8 @@ import { DinoCardComponent } from '../pages/home/dino-card/dino-card.component';
     AppRoutingModule
   ],
   providers: [
-    Title
+    Title,
+    AuthService
   ],
   bootstrap: [AppComponent]
 })
