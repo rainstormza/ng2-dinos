@@ -1,35 +1,44 @@
 import { Injectable } from '@angular/core';
 import { tokenNotExpired } from 'angular2-jwt';
+import { Router } from '@angular/router';
 
 // Avoid name not found warnings
 declare var Auth0Lock: any;
 
 @Injectable()
 export class AuthService {
-  lock = new Auth0Lock('1l4N9vJHqM8h3cqq1V0ph91wDESNAppV', 'kmaida.auth0.com', {
+  lock = new Auth0Lock('[YOUR_AUTH0_CLIENT_ID]', '[YOUR_AUTH0_CLIENT_DOMAIN]', {
     auth: {
-      redirectUrl: 'http://localhost:4200/redirect',
+      redirectUrl: 'http://localhost:4200',
       responseType: 'token'
     }
   });
   userProfile: Object;
+  loginRedirect: string = localStorage.getItem('login_redirect');
 
-  constructor() {
+  constructor(private router: Router) {
     this.userProfile = JSON.parse(localStorage.getItem('profile'));
 
-    // Add callback for lock 'authenticated' event
-    this.lock.on('authenticated',
+    // Add callback for lock 'hash_parsed' event
+    this.lock.on('hash_parsed',
       (authResult) => {
-        localStorage.setItem('id_token', authResult.idToken);
+        if (authResult && authResult.idToken) {
+          localStorage.setItem('id_token', authResult.idToken);
 
-        this.lock.getProfile(authResult.idToken, (error, profile) => {
-          if (error) {
-            throw Error('There was an error retrieving profile data!');
-          }
+          this.lock.getProfile(authResult.idToken, (error, profile) => {
+            if (error) {
+              throw Error('There was an error retrieving profile data!');
+            }
 
-          localStorage.setItem('profile', JSON.stringify(profile));
-          this.userProfile = profile;
-        });
+            localStorage.setItem('profile', JSON.stringify(profile));
+            this.userProfile = profile;
+
+            if (this.loginRedirect) {
+              this.router.navigate([this.loginRedirect]);
+              localStorage.removeItem('login_redirect');
+            }
+          });
+        }
       }
     );
   }
