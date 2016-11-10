@@ -6,7 +6,7 @@ declare var Auth0Lock: any;
 
 @Injectable()
 export class AuthService {
-  lock = new Auth0Lock('[YOUR_AUTH0_CLIENT_ID]', '[YOUR_AUTH0_CLIENT_DOMAIN].auth0.com', {});
+  lock = new Auth0Lock('[YOUR_AUTH0_CLIENT_ID]', '[YOUR_AUTH0_CLIENT_DOMAIN]', {});
   userProfile: Object;
 
   constructor() {
