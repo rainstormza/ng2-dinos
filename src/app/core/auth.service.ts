@@ -20,38 +20,37 @@ export class AuthService {
     this.userProfile = JSON.parse(localStorage.getItem('profile'));
 
     // Add callback for lock 'hash_parsed' event
-    this.lock.on('hash_parsed',
-      (authResult) => {
-        if (authResult && authResult.idToken) {
-          localStorage.setItem('id_token', authResult.idToken);
+    // hash_parsed is needed because we're redirecting
+    this.lock.on('hash_parsed', (authResult) => {
+      if (authResult && authResult.idToken) {
+        localStorage.setItem('id_token', authResult.idToken);
 
-          this.lock.getProfile(authResult.idToken, (error, profile) => {
-            if (error) {
-              throw Error('There was an error retrieving profile data!');
-            }
+        this.lock.getProfile(authResult.idToken, (error, profile) => {
+          if (error) {
+            throw Error('There was an error retrieving profile data!');
+          }
 
-            localStorage.setItem('profile', JSON.stringify(profile));
-            this.userProfile = profile;
+          localStorage.setItem('profile', JSON.stringify(profile));
+          this.userProfile = profile;
 
-            if (this.loginRedirect) {
-              this.router.navigate([this.loginRedirect]);
-              localStorage.removeItem('login_redirect');
-            }
-          });
-        }
+          if (this.loginRedirect) {
+            this.router.navigate([this.loginRedirect]);
+            localStorage.removeItem('login_redirect');
+          }
+        });
       }
-    );
+    });
   }
 
   login() {
     // Call the show method to display the Lock widget
     this.lock.show();
-    // Store the redirect location after logging in
+    // Store the redirect location when opening the login box
     localStorage.setItem('login_redirect', window.location.pathname);
   }
 
   logout() {
-    // Remove token and profile from localStorage
+    // Remove token and profile
     localStorage.removeItem('id_token');
     localStorage.removeItem('profile');
     this.userProfile = undefined;
