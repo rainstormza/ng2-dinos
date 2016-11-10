@@ -29,18 +29,18 @@ export class AuthService {
     );
   }
 
-  public login() {
+  login() {
     // Call the show method to display the Lock widget
     this.lock.show();
   }
 
-  public authenticated() {
+  authenticated() {
     // Check if there's an unexpired JWT
     // This searches for an item in localStorage with key == 'id_token'
     return tokenNotExpired();
   }
 
-  public logout() {
+  logout() {
     // Remove token and profile from localStorage
     localStorage.removeItem('id_token');
     localStorage.removeItem('profile');
