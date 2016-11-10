@@ -9,6 +9,7 @@ import { LoadingComponent } from './ui/loading.component';
 import { HeaderComponent } from '../header/header.component';
 import { FooterComponent } from '../footer/footer.component';
 import { AuthService } from './auth.service';
+import { RedirectComponent } from './redirect.component';
 
 import { AboutComponent } from '../pages/about/about.component';
 import { HomeComponent } from '../pages/home/home.component';
@@ -26,7 +27,8 @@ import { DinoCardComponent } from '../pages/home/dino-card/dino-card.component';
     HomeComponent,
     DetailComponent,
     Error404Component,
-    DinoCardComponent
+    DinoCardComponent,
+    RedirectComponent
   ],
   imports: [
     BrowserModule,

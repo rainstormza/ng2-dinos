@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router';
 import { HomeComponent } from '../pages/home/home.component';
 import { AboutComponent } from '../pages/about/about.component';
 import { DetailComponent } from '../pages/detail/detail.component';
+import { RedirectComponent } from './redirect.component';
 import { Error404Component } from '../pages/error404/error404.component';
 
 @NgModule({
@@ -20,6 +21,10 @@ import { Error404Component } from '../pages/error404/error404.component';
       {
         path: 'dinosaur/:id',
         component: DetailComponent
+      },
+      {
+        path: 'redirect',
+        component: RedirectComponent
       },
       {
         path: '**',

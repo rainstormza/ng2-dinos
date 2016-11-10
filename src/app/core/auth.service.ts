@@ -6,7 +6,12 @@ declare var Auth0Lock: any;
 
 @Injectable()
 export class AuthService {
-  lock = new Auth0Lock('[YOUR_AUTH0_CLIENT_ID]', '[YOUR_AUTH0_CLIENT_DOMAIN]', {});
+  lock = new Auth0Lock('1l4N9vJHqM8h3cqq1V0ph91wDESNAppV', 'kmaida.auth0.com', {
+    auth: {
+      redirectUrl: 'http://localhost:4200/redirect',
+      responseType: 'token'
+    }
+  });
   userProfile: Object;
 
   constructor() {
@@ -32,6 +37,8 @@ export class AuthService {
   login() {
     // Call the show method to display the Lock widget
     this.lock.show();
+    // Store the redirect location after logging in
+    localStorage.setItem('login_redirect', window.location.pathname);
   }
 
   logout() {
