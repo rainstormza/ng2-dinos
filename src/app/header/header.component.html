@@ -27,10 +27,10 @@
       <a
         class="btn btn-primary"
         (click)="auth.login()"
-        *ngIf="!auth.authenticated()">Log In</a>
+        *ngIf="!auth.authenticated">Log In</a>
 
       <!-- Logged in -->
-      <div class="alert alert-info text-center" *ngIf="auth.authenticated()">
+      <div class="alert alert-info text-center" *ngIf="auth.authenticated">
         <p *ngIf="auth.userProfile">Hello, {{auth.userProfile.name}}!</p>
 
         <a
