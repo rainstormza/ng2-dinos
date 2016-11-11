@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { tokenNotExpired } from 'angular2-jwt';
 import { Router } from '@angular/router';
+import { tokenNotExpired } from 'angular2-jwt';
 
 // Avoid name not found warnings
 declare var Auth0Lock: any;
@@ -14,10 +14,11 @@ export class AuthService {
     }
   });
   userProfile: Object;
-  loginRedirect: string = localStorage.getItem('login_redirect');
+  loginRedirect: string;
 
   constructor(private router: Router) {
     this.userProfile = JSON.parse(localStorage.getItem('profile'));
+    this.loginRedirect = localStorage.getItem('login_redirect');
 
     // Add callback for lock 'hash_parsed' event
     // hash_parsed is needed because we're redirecting
@@ -36,6 +37,7 @@ export class AuthService {
           if (this.loginRedirect) {
             this.router.navigate([this.loginRedirect]);
             localStorage.removeItem('login_redirect');
+            this.loginRedirect = undefined;
           }
         });
       }
