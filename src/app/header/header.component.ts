@@ -15,11 +15,9 @@ export class HeaderComponent implements OnInit {
   constructor(private router: Router, private auth: AuthService) { }
 
   ngOnInit() {
-    this.router.events.subscribe(event => {
-      if (event instanceof NavigationStart && this.navOpen) {
-        this.toggleNav();
-      }
-    });
+    this.router.events
+      .filter(event => event instanceof NavigationStart && this.navOpen)
+      .subscribe(event => this.toggleNav());
   }
 
   toggleNav() {
