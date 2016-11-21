@@ -45,7 +45,7 @@ export class HomeComponent implements OnInit {
     this.getDinos();
   }
 
-  filterDinos(query: string) {
+  filterDinos() {
     this.filteredDinos = this.filterService.search(this.dinos, this.query);
   }
 
