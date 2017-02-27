@@ -10,9 +10,9 @@ import { AuthService } from '../core/auth.service';
 })
 export class HeaderComponent implements OnInit {
   @Output() navToggled = new EventEmitter();
-  navOpen: boolean = false;
+  navOpen = false;
 
-  constructor(private router: Router, private auth: AuthService) { }
+  constructor(private router: Router, public auth: AuthService) { }
 
   ngOnInit() {
     this.router.events
