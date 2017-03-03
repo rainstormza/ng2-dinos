@@ -4,6 +4,8 @@ import { tokenNotExpired } from 'angular2-jwt';
 
 // Avoid name not found warnings
 declare var Auth0Lock: any;
+declare var localStorage: any;
+declare var window: any;
 
 @Injectable()
 export class AuthService {
