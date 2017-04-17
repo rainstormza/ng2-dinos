@@ -9,6 +9,8 @@ declare var window: any;
 
 @Injectable()
 export class AuthService {
+  // IMPORTANT: id_token should only be used on the client, NOT to secure APIs.
+  // If you need to authorize an API, see: https://github.com/auth0-blog/angular-auth0-aside/blob/master/angular-auth0-aside.markdown
   lock = new Auth0Lock('[YOUR_AUTH0_CLIENT_ID]', '[YOUR_AUTH0_CLIENT_DOMAIN]', {
     auth: {
       redirectUrl: 'http://localhost:4200',
@@ -68,8 +70,7 @@ export class AuthService {
 
   get authenticated() {
     // Check if there's an unexpired JWT
-    // This searches for an item in localStorage with key == 'id_token'
-    return tokenNotExpired();
+    return tokenNotExpired('id_token');
   }
 
 }
